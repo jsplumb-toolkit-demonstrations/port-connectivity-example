@@ -1,0 +1,116 @@
+<!doctype html>
+<html>
+
+    <head>
+        <link rel="stylesheet" href="node_modules/@jsplumbtoolkit/browser-ui/css/jsplumbtoolkit.css">
+        <link rel="stylesheet" href="app.css">
+    </head>
+
+    <body>
+
+        <div id="canvas"></div>
+
+        <script type="jtk" id="tmplStart">
+            <div>
+                <h4>{{id}}</h4>
+                <div class="connect">
+                    <div class="ep" data-jtk-port="start" data-jtk-source="true" data-jtk-port-type="start"/>
+                </div>
+            </div>
+        </script>
+
+        <script type="jtk" id="tmplWidget">
+            <div data-jtk-target="true">
+                <h4>{{id}}</h4>
+                <div class="connect connect-left">
+                    <div class="ep" data-jtk-port="left" data-jtk-source="true"/>
+                </div>
+                <div class="connect connect-right">
+                    <div class="ep" data-jtk-port="right" data-jtk-source="true"/>
+                </div>
+            </div>
+        </script>
+
+
+        <script src="node_modules/@jsplumbtoolkit/browser-ui/js/jsplumbtoolkit.browser-ui.umd.js"></script>
+
+        <script>
+
+            jsPlumbToolkit.ready(function() {
+                var tk = jsPlumbToolkit.newInstance();
+                tk.render(document.getElementById("canvas"), {
+                    layout:{
+                        type:"Absolute"
+                    },
+                    zoomToFit:true,
+                    view:{
+                        nodes:{
+                            start:{
+                                templateId:"tmplStart"
+                            },
+                            widget:{
+                                templateId:"tmplWidget"
+                            }
+                        },
+                        edges:{
+                            default:{
+                                overlays:[
+                                    {
+                                        type:"Arrow",
+                                        options:{
+                                            location:1
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        ports:{
+                            start:{
+                                // rules for the start port type here
+                            },
+                            widget:{
+                                // common rules for left/right
+                            },
+                            left:{
+                                parent:"widget"
+                            },
+                            right:{
+                                parent:"widget"
+                            }
+                        }
+                    },
+                    defaults:{
+                        anchors:[ "Center", "Top"],
+                        connectionsDetachable:false,
+                        endpoint:"Blank"
+                    },
+                    consumeRightClick:false
+
+                })
+
+                tk.load({
+                    data:{
+                        nodes:[
+                            { type:"start", id:"1", left:0, top:0 },
+                            { type:"widget", id:"2", left:-100, top:200 },
+                            { type:"widget", id:"3", left:100, top:200 },
+                            { type:"widget", id:"4", left:-300, top:400 },
+                            { type:"widget", id:"5", left:-50, top:400 },
+                            { type:"widget", id:"6", left:300, top:400 },
+                            { type:"widget", id:"7", left:50, top:400 }
+                        ],
+                        edges:[
+                            { source:"1.start", target:"2"},
+                            { source:"1.start", target:"3"},
+                            { source:"2.left", target:"4"},
+                            { source:"2.right", target:"5"}
+                        ]
+                    }
+                })
+            })
+
+
+        </script>
+
+    </body>
+</html>

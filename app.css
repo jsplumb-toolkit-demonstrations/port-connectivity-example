@@ -1,0 +1,56 @@
+:root {
+    --blue:dodgerblue;
+}
+#canvas {
+    width:100vw;
+    height:95vh;
+}
+
+.jtk-node {
+    width:80px;
+    height:80px;
+    outline:1px solid silver;
+}
+
+.jtk-connector path {
+    stroke:var(--blue);
+}
+
+path.jtk-overlay{
+    fill:var(--blue);
+}
+
+.connect {
+    position:absolute;
+    height:40px;
+    width:4px;
+    background-color: var(--blue);
+    top:94%;
+    left:50%;
+}
+
+.connect-left {
+    left:33%;
+}
+
+.connect-right {
+    left:66%;
+}
+
+.ep {
+    position:absolute;
+    border-radius:50%;
+    width:20px;
+    height:20px;
+    color:white;
+    left:-8px;
+    top:30px;
+    background-color: var(--blue);
+    text-align: center;
+    line-height: 20px;
+    z-index:1;
+}
+
+.ep::after {
+    content:"+";
+}
